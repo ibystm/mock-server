@@ -1,6 +1,15 @@
 import mongoose from "mongoose";
 
-// User Config
+export interface UserSchema {
+  email: string;
+  username: string;
+  authentication: {
+    password: string;
+    salt?: string;
+    sessionToken?: string;
+  };
+}
+
 const UserSchema = new mongoose.Schema({
   email: { type: String, required: true },
   username: { type: String, required: true },
@@ -11,7 +20,7 @@ const UserSchema = new mongoose.Schema({
   },
 });
 
-export const UserModel = mongoose.model("User", UserSchema);
+export const UserModel = mongoose.model<UserSchema>("User", UserSchema);
 
 // User Actions
 export const getUsers = () => UserModel.find();
