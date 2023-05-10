@@ -2,6 +2,20 @@ import { getUserBySessionToken } from "../db/users";
 import express from "express";
 import get from "lodash/get";
 import merge from "lodash/merge";
+import { API_KEY } from "../constants";
+
+export const isAPIUser = (
+  req: express.Request,
+  res: express.Response,
+  next: express.NextFunction
+) => {
+  // extract API key
+  const { ak } = req.query;
+  if (ak !== API_KEY) {
+    return res.sendStatus(400);
+  }
+  next();
+};
 
 export const isOwner = async (
   req: express.Request,
