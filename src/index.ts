@@ -6,7 +6,7 @@ import compression from "compression";
 import cors from "cors";
 import mongoose from "mongoose";
 import router from "./router";
-import { MONGO_PASSWORD } from "./constants";
+import { LOCAL_PORT, MONGO_PASSWORD, PORT } from "./constants";
 
 const app = express();
 
@@ -19,10 +19,9 @@ app.use(compression());
 app.use(cookieParser());
 app.use(bodyParser.json());
 
-const server = http.createServer(app);
+const port = PORT || LOCAL_PORT;
 
-// TODO production用のURLを追加
-server.listen(8080, () => {
+app.listen(port, () => {
   console.log("Server running on http://localhost:8080/");
 });
 
